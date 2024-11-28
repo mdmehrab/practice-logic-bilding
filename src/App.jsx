@@ -1,9 +1,10 @@
 import Count from "./Count";
+import ToDoList from "./ToDoList";
 
 function App() {
   return (
     <div>
-    <Count/>
+      <ToDoList />
     </div>
   );
 }

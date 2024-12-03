@@ -1,12 +1,7 @@
-import Count from "./Count";
 import ToDoList from "./ToDoList";
 
 function App() {
-  return (
-    <div>
-      <ToDoList />
-    </div>
-  );
+  return <ToDoList />;
 }
 
 export default App;

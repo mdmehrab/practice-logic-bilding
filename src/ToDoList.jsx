@@ -1,30 +1,75 @@
-import React from "react";
+import { useState } from "react";
+import TaskInput from "./components/TaskInput";
+import TaskList from "./components/TaskList";
+import { LuNotepadText } from "react-icons/lu";
+import { todoList } from "./data";
+
 
 const ToDoList = () => {
-  return (
-    <div>
-      <div className="flex gap-3 items-center justify-center w-screen p-5">
-        <input
-          className="focus:outline-none border border-black gap-3"
-          type="text"
-          placeholder="Add a task"
-        />
-        <button className="text-white bg-green-500 p-1">Add Task</button>
-      </div>
-      <div className="flex  items-center justify-center w-screen">
-        <ul className="">
-          <div className="flex gap-3 m-3">
-            <li>this is first static task 1</li>
-            <button className="text-white bg-red-500 p-1">delete</button>
-          </div>
+  const [tasks, setTasks] = useState(todoList);
+  const [value, setValue] = useState("");
 
-          <div className="flex gap-3 m-3 ">
-            <li>this is secound static task 2</li>
-            <button className="text-white bg-red-500 p-1">delete</button>
+  // Handle input changes
+  const handleChange = (e) => {
+    setValue(e.target.value);
+  };
+
+  // Handle adding new tasks
+  const handleClick = () => {
+    if (value.trim() === "") return;
+    setTasks([
+      ...tasks,
+      { id: tasks.length + 1, name: value, isStatus: "pending" },
+    ]);
+
+    setValue("");
+  };
+
+  const handleDelete = (taskId) => {
+    setTasks(tasks.filter((task) => task.id !== taskId));
+  };
+
+
+  const handleEditTask = (taskId, updatedName, updatedStatus) => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === taskId
+          ? { ...task, name: updatedName, isStatus: updatedStatus }
+          : task
+      )
+    );
+  };
+  
+
+  return (
+    <>
+      <div className="flex items-center h-screen">
+        <div className="bg-white w-[50%] mx-auto rounded-xl">
+          <div className="flex flex-col items-center justify-center h-screen">
+            <div className="flex m-3 items-center justify-center gap-2">
+              <p className="font-bold">To Do List</p>
+              <span className="text-lg">
+                <LuNotepadText />
+              </span>
+            </div>
+
+            {/* Pass props to TaskInput */}
+            <TaskInput
+              value={value}
+              handleChange={handleChange}
+              handleClick={handleClick}
+            />
+
+            {/* Pass tasks to TaskList */}
+            <TaskList
+              tasks={tasks}
+              handleDelete={handleDelete}
+              handleEditTask={handleEditTask}
+            />
           </div>
-        </ul>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

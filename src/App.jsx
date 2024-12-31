@@ -1,7 +1,11 @@
-import ToDoList from "./ToDoList";
+import NavBar from "./components/NavBar";
 
 function App() {
-  return <ToDoList />;
+  return (
+    <>
+      <NavBar />
+    </>
+  );
 }
 
 export default App;
